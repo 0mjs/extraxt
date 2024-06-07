@@ -1,3 +1,8 @@
 test.*
 .pyc
 __pycache__
+.env
+extraxt.*
+dist
+build
+setup.*
