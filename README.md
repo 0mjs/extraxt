@@ -43,14 +43,12 @@ def main():
     with open(path, "rb") as stream:
         output = extraxt.read(
             stream=stream.read(),
-            type="pdf",
             fields={
                 "introduction": {
                     "title": "Introduction",
                     "fields": ["title", "date", "submission_id", "collection_location"],
                 },
             },
-            indent=2,
         )
         print(f"Output: \n\n{output}\n\n")
 
@@ -80,7 +78,7 @@ async def process_file(file: File):
         content = await file.read()
         if not content:
             raise HTTPException(500, "Failed to read file.")
-        content = await event_loop(extraxt.read, content, "pdf", FIELDS)
+        content = await event_loop(extraxt.read, content, FIELDS)
 
     except Exception as e:
         tb = traceback.format_exc()
