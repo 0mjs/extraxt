@@ -11,7 +11,7 @@ from fastapi import HTTPException
 from functools import partial
 from .config import FIELDS
 
-extract = Extract()
+extraxt = Extraxt()
 
 async def event_loop(func, *args, **kwargs):
     print(f"Executing {func.__qualname__} asynchronously in the Event Loop.")
