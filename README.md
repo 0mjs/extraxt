@@ -4,8 +4,16 @@ Extraxt is a simple Python-based MuPDF library for parsing and extracting data f
 Example Usage:
 
 ```python
+from asyncio import get_running_loop
 from extraxt import Extraxt
+from functools import partial
 from .config import FIELDS
+
+async def event_loop(func, *args, **kwargs):
+    print(f"Executing {func.__qualname__} asynchronously in the Event Loop.")
+    return await get_running_loop().run_in_executor(
+        None, partial(func, *args, **kwargs)
+    )
 
 async def process_file(file: File):
     try:
