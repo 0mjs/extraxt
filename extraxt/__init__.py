@@ -1,7 +1,7 @@
 import json
 import io
-from pkg.service.ocr import OCRService
-from pkg.service.formatter import FormatService
+from extraxt.service.ocr import OCRService
+from extraxt.service.formatter import FormatService
 
 
 class Extraxt:

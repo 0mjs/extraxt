@@ -2,7 +2,7 @@ from pandas import DataFrame
 
 import fitz
 
-from pkg.util import to_snake
+from extraxt.util import to_snake
 
 
 class OCRService:
