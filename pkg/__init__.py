@@ -1,6 +1,3 @@
-from pkg.service.ocr import OCRService
-from pkg.service.formatter import FormatService
+from .extraxt import Extraxt
 
-__all__ = ["OCRService", "FormatService"]
-
-from pkg.extraxt import Extraxt
+__all__ = ["Extraxt"]
