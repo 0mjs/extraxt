@@ -2,10 +2,12 @@
 Extraxt is a simple Python-based MuPDF library for parsing and extracting data from PDF documents.
 
 Example Usage:
+`FastAPI`
 
 ```python
 from asyncio import get_running_loop
 from extraxt import Extraxt
+from fastapi import HTTPException
 from functools import partial
 from .config import FIELDS
 
