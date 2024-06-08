@@ -77,7 +77,6 @@ extraxt = Extraxt()
 
 async def process_file(file: File):
     try:
-        user, _ = auth
         content = await file.read()
         if not content:
             raise HTTPException(500, "Failed to read file.")
