@@ -47,7 +47,7 @@ def main():
             fields={
                 "introduction": {
                     "title": "Introduction",
-                    "fields": ["title", "date", "patient", "examination", "history"],
+                    "fields": ["title", "date", "submission_id", "collection_location"],
                 },
             },
             indent=2,
