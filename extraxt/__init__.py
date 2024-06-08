@@ -1,16 +1,17 @@
 import json
 import io
-from extraxt.service.ocr import OCRService
-from extraxt.service.formatter import FormatService
+
+from extraxt.func.ocr import OCR
+from extraxt.func.fmt import Formatter
 
 
 class Extraxt:
-    def read(self, stream, type="pdf", fields=None, indent=4):
+    def read(self, stream, fields=None, indent=4):
         if isinstance(stream, (bytes, bytearray)):
             stream = io.BytesIO(stream)
 
-        ocr = OCRService(type=type)
-        formatter = FormatService(fields=fields)
+        ocr = OCR()
+        formatter = Formatter(fields=fields)
 
         dataframe = ocr.read(stream)
         content = dataframe.to_dict(orient="records")[0] if not dataframe.empty else {}

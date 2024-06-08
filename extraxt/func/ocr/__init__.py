@@ -6,10 +6,9 @@ import fitz
 from extraxt.util import to_snake
 
 
-class OCRService:
-    def __init__(self, type="pdf"):
-        self.type = type
-        print(f"Extraxt OCR: Initialized OCRService with type: {type}")
+class OCR:
+    def __init__(self):
+        print(f"Extraxt OCR: Initialized OCR service...")
 
     def read(self, stream):
         text = self.extract(stream)
@@ -23,12 +22,12 @@ class OCRService:
     def doc(self, stream):
         stream.seek(0)
         content = stream.read()
-        print(f"Extraxt OCR: Opening {self.type} file with `fitz`...")
-        doc = fitz.open(stream=content, filetype=self.type)
+        print(f"Extraxt OCR: Opening file with `fitz`...")
+        doc = fitz.open(stream=content, filetype="pdf")
         return doc
 
     def text(self, doc):
-        print(f"Extraxt OCR: Reading text content from {self.type} file...")
+        print(f"Extraxt OCR: Reading text content from file...")
         text = list(map(lambda page: page.get_text("text"), doc))
         return text
 
@@ -42,7 +41,7 @@ class OCRService:
             return []
 
     def parse(self, lines):
-        print(f"Extraxt OCR: Parsing text content...")
+        print(f"Extraxt OCR: Parsing and sanitising text content...")
         data = {}
         key = None
         capture_age = False
@@ -54,7 +53,7 @@ class OCRService:
 
             if "date of birth:" in lower_line:
                 print(
-                    f"Extraxt OCR: !!! Sensitive data found: [Date of birth] - This data will be parsed as [Age]..."
+                    f"Extraxt OCR: !!! Sensitive data found: [Date of birth]. This data will be parsed as [Age]..."
                 )
                 key = "age"
                 data[key] = ""
