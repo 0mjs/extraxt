@@ -1,4 +1,5 @@
 from pandas import DataFrame
+import logging
 import re
 
 import fitz
@@ -8,7 +9,7 @@ from extraxt.util import to_snake
 
 class OCR:
     def __init__(self):
-        print(f"Extraxt OCR: Initialized OCR service...")
+        logging.info(f"Initialized OCR service.")
 
     def read(self, stream):
         text = self.extract(stream)
@@ -22,12 +23,12 @@ class OCR:
     def doc(self, stream):
         stream.seek(0)
         content = stream.read()
-        print(f"Extraxt OCR: Opening file with `fitz`...")
+        logging.info(f"Opening file...")
         doc = fitz.open(stream=content, filetype="pdf")
         return doc
 
     def text(self, doc):
-        print(f"Extraxt OCR: Reading text content from file...")
+        logging.info(f"Reading text content...")
         text = list(map(lambda page: page.get_text("text"), doc))
         return text
 
@@ -41,7 +42,7 @@ class OCR:
             return []
 
     def parse(self, lines):
-        print(f"Extraxt OCR: Parsing and sanitising text content...")
+        logging.info(f"Parsing/sanitising text content...")
         data = {}
         key = None
         capture_age = False
@@ -52,8 +53,8 @@ class OCR:
             lower_line = clean_line.lower()
 
             if "date of birth:" in lower_line:
-                print(
-                    f"Extraxt OCR: !!! Sensitive data found: [Date of birth]. This data will be parsed as [Age]..."
+                logging.info(
+                    f"* Sensitive data found: [Date of birth]. This data will be parsed as [Age] as specified in your fields..."
                 )
                 key = "age"
                 data[key] = ""

@@ -21,6 +21,7 @@ Extract uses two powerful libraries to parse and extract data from documents.
 `pip install extraxt`
 
 ## Usage
+Extraxt can read files directly from disk, or as a Buffer stream.
 
 ### Read file from disk
 
@@ -28,27 +29,23 @@ Extract uses two powerful libraries to parse and extract data from documents.
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
-
 from extraxt import Extraxt
+from fields import FIELDS
 
 extraxt = Extraxt()
 
 
 def main():
-    path = "my_test_file.pdf"
+    path = "YOUR_TEST_FILE.pdf"
     if not os.path.exists(path):
         return print(f"File not found: {path}")
 
     with open(path, "rb") as stream:
         output = extraxt.read(
             stream=stream.read(),
-            fields={
-                "introduction": {
-                    "title": "Introduction",
-                    "fields": ["title", "date", "submission_id", "collection_location"],
-                },
-            },
+            type="pdf",
+            fields=FIELDS,
+            indent=2,
         )
         print(f"Output: \n\n{output}\n\n")
 
@@ -59,6 +56,8 @@ if __name__ == "__main__":
 
 ### Advanced Usage
 #### FastAPI
+For cases using FastAPI, Extraxt is a synchronous package and _will block_ the main thread.
+To perform non-blocking/asynchronous extraction, you will need to use `asyncio` and Futures.
 
 ```python
 import traceback

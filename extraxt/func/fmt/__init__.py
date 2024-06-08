@@ -1,7 +1,10 @@
+import logging
+
+
 class Formatter:
     def __init__(self, fields):
         self.fields = fields
-        print(f"Extraxt: Initialized Formatter service with fields {fields.keys()}...")
+        logging.info(f"Initialized Formatter service with fields {fields.keys()}...")
 
     def format(self, content):
         data = {}
@@ -10,7 +13,7 @@ class Formatter:
         return data
 
     def apply(self, data, output, filter=None):
-        print(f"Extraxt Formatter: Applying basic formatting to data...")
+        logging.info(f"Applying basic formatting to data...")
         for category, keys in self.fields.items():
             for key in keys:
                 if key in data.get(category, {}):
