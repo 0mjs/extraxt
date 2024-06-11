@@ -1,9 +1,26 @@
+"""
+Package: Extraxt
+Developed by: Matt J. Stevenson
+Organisation: Zephyr Software
+Description: An OSS Python MuPDF package for extracting and parsing data from PDF files.
+
+This software is part of the Extraxt package developed at Zephyr Software.
+Licensed under the MIT License.
+
+Author: Matt J. Stevenson
+Date: 11/06/2024
+"""
+
+from extraxt.module.parser import Parser
+from extraxt.module.formatter import Formatter
+
+
 import json
 import io
 import logging
 
-from extraxt.func.ocr import OCR
-from extraxt.func.fmt import Formatter
+from extraxt.module.parser import OCR
+from extraxt.module.formatter import Formatter
 
 logging.basicConfig(
     level=logging.INFO, format="[Extraxt]: %(asctime)s - %(levelname)s - %(message)s"
@@ -23,5 +40,7 @@ class Extraxt:
         data = formatter.format(content)
         output = {section.lower(): {} for section in fields.keys()}
         formatter.apply(data, output)
+
+        print(json.dumps(output, indent=indent))
 
         return json.dumps(output, indent=indent)

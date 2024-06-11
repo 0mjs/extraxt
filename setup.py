@@ -2,9 +2,9 @@ from setuptools import setup, find_packages
 
 setup(
     name="extraxt",
-    version="0.0.11",
+    version="0.0.12",
     description="Easily extract data from PDFs.",
-    long_description="A Python-based MuPDF data extraction package that uses OCR to extract data from PDFs.",
+    long_description="A Python PDF data extraction library with a simple interface.",
     long_description_content_type="text/markdown",
     author="Matt J. Stevenson",
     author_email="dev@mattjs.me",

@@ -11,6 +11,5 @@ Author: Matt J. Stevenson
 Date: 11/06/2024
 """
 
-
-def to_snake(string):
-    return string.strip().replace(" ", "_").lower()
+from extraxt.module.parser import Parser
+from extraxt.module.formatter import Formatter

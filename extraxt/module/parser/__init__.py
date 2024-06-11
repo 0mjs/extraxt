@@ -1,48 +1,68 @@
-from pandas import DataFrame
+"""
+Package: Extraxt
+Developed by: Matt J. Stevenson
+Organisation: Zephyr Software
+Description: An OSS Python MuPDF package for extracting and parsing data from PDF files.
+
+This software is part of the Extraxt package developed at Zephyr Software.
+Licensed under the MIT License.
+
+Author: Matt J. Stevenson
+Date: 11/06/2024
+"""
+
 import logging
 import re
-
+from pandas import DataFrame
 import fitz
-
 from extraxt.util import to_snake
 
 
-class OCR:
+class Parser:
     def __init__(self):
-        logging.info(f"Initialized OCR service.")
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.INFO)
+        self.logger.info("Initialized OCR service.")
 
     def read(self, stream):
+        """Extract text from a PDF stream and parse it into a DataFrame."""
         text = self.extract(stream)
-        if text and text[0]:
+        if text:
             content = text[0].splitlines()
             data = self.parse(content)
             return DataFrame([data])
-        else:
-            return DataFrame()
+        return DataFrame()
 
     def doc(self, stream):
+        """Open a PDF document from a stream."""
         stream.seek(0)
         content = stream.read()
-        logging.info(f"Opening file...")
-        doc = fitz.open(stream=content, filetype="pdf")
-        return doc
+        self.logger.info("Opening file...")
+        try:
+            return fitz.open(stream=content, filetype="pdf")
+        except Exception as e:
+            self.logger.error(f"Failed to open PDF document: {e}")
+            raise
 
     def text(self, doc):
-        logging.info(f"Reading text content...")
-        text = list(map(lambda page: page.get_text("text"), doc))
-        return text
+        """Extract text from all pages of a PDF document."""
+        self.logger.info("Reading text content...")
+        return [page.get_text("text") for page in doc]
 
     def extract(self, stream):
+        """Extract text content from a PDF stream."""
         try:
             doc = self.doc(stream)
             text = self.text(doc)
             doc.close()
             return text
         except Exception as e:
+            self.logger.error(f"Error extracting text: {e}")
             return []
 
     def parse(self, lines):
-        logging.info(f"Parsing/sanitising text content...")
+        """Parse lines of text to extract key-value pairs."""
+        self.logger.info("Parsing/sanitising text content...")
         data = {}
         key = None
         capture_age = False
@@ -53,8 +73,8 @@ class OCR:
             lower_line = clean_line.lower()
 
             if "date of birth:" in lower_line:
-                logging.info(
-                    f"* Sensitive data found: [Date of birth]. This data will be parsed as [Age] as specified in your fields..."
+                self.logger.info(
+                    "Sensitive data found: [Date of birth]. This data will be parsed as [age] as specified in your fields..."
                 )
                 key = "age"
                 data[key] = ""
