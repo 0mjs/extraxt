@@ -19,7 +19,7 @@ import json
 import io
 import logging
 
-from extraxt.module.parser import OCR
+from extraxt.module.parser import Parser
 from extraxt.module.formatter import Formatter
 
 logging.basicConfig(
@@ -32,15 +32,12 @@ class Extraxt:
         if isinstance(stream, (bytes, bytearray)):
             stream = io.BytesIO(stream)
 
-        ocr = OCR()
-        formatter = Formatter(fields=fields)
-
-        dataframe = ocr.read(stream)
+        parser = Parser()
+        formatter = Formatter(fields)
+        dataframe = parser.read(stream)
         content = dataframe.to_dict(orient="records")[0] if not dataframe.empty else {}
         data = formatter.format(content)
         output = {section.lower(): {} for section in fields.keys()}
         formatter.apply(data, output)
-
-        print(json.dumps(output, indent=indent))
 
         return json.dumps(output, indent=indent)

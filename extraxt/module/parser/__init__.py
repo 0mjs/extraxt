@@ -22,7 +22,7 @@ class Parser:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.INFO)
-        self.logger.info("Initialized OCR service.")
+        self.logger.info("Initialised Parser service.")
 
     def read(self, stream):
         """Extract text from a PDF stream and parse it into a DataFrame."""
