@@ -68,7 +68,7 @@ if __name__ == "__main__":
     main()
 ```
 
-### Advanced Usage
+### Read file in asynchronous API
 #### FastAPI
 
 For cases using FastAPI, Extraxt is a synchronous package and _will block_ the main thread.
