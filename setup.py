@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="extraxt",
-    version="0.0.13",
+    version="0.0.14",
     description="Easily extract data from PDFs.",
     long_description="A Python PDF data extraction library with a simple interface.",
     long_description_content_type="text/markdown",

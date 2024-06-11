@@ -28,16 +28,14 @@ class Formatter:
     def apply(self, data, output, filter=None):
         logging.info(f"Applying basic formatting to data...")
         for category, keys in self.fields.items():
+            category_data = data.get(category, {})
+            output_category = output.setdefault(category.lower(), {})
             for key in keys:
-                if key in data.get(category, {}):
-                    item = data[category][key]
-                    if isinstance(item, str):
-                        item_key = item.strip()
-                        value = self.basic(item_key)
-                    else:
-                        value = self.basic(item)
+                if key in category_data:
+                    item = category_data[key]
+                    value = self.basic(item.strip() if isinstance(item, str) else item)
                     if value != filter:
-                        output[category.lower()][key] = value
+                        output_category[key] = value
 
     def basic(self, value):
         return {"No": False, "Yes": True, "Unknown": "unknown", "": None}.get(
