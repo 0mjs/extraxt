@@ -32,8 +32,8 @@ pip install extraxt
 Extraxt is able to consume either an asynchronous byte stream or a buffer directly from disk.
 
 _Before you begin_:
-- Matching something like `Phone (Secondary) -> phone_(secondary)` will require the usage of parenthesis as of `0.11`. _This will soon be opt in, where by default the parenthesis will be redacted_.
-- As of `0.11`, sensitive data _is not_ configurable via the API, and instead `"Date of birth"` is parsed as `"age"` only.
+- Matching something like `Phone (Secondary) -> phone_(secondary)` will require the usage of parenthesis as of `0.0.17`. _This will soon be opt in, where by default the parenthesis will be redacted_.
+- As of `0.0.17`, sensitive data _is not_ configurable via the API, and instead `"Date of birth"` is parsed as `"age"` only.
 
 
 ### Read file from disk
