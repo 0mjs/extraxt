@@ -28,7 +28,7 @@ class Formatter:
         return data
 
     def apply(self, data, output, filter=None):
-        logging.info(f"[ZEPHYR EXTRAXT] Sanitising data...")
+        logging.info(f"[ZEPHYR EXTRAXT] Sanitising retrieved data...")
         for category, keys in self.fields.items():
             category_data = data.get(category, {})
             output_category = output.setdefault(category.lower(), {})

@@ -39,5 +39,6 @@ class Extraxt:
         data = formatter.format(content)
         output = {section.lower(): {} for section in fields.keys()}
         formatter.apply(data, output)
+        logging.info(f"[ZEPHYR EXTRAXT] Extraction complete.")
 
         return json.dumps(output, indent=indent)

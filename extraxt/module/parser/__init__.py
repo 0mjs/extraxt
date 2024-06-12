@@ -62,7 +62,7 @@ class Parser:
 
     def parse(self, lines):
         """Parse lines of text to extract key-value pairs."""
-        self.logger.info("[ZEPHYR EXTRAXT] Parsing and sanitising text content...")
+        self.logger.info("[ZEPHYR EXTRAXT] Parsing text content...")
         data = {}
         key = None
         capture_age = False
