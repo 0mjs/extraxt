@@ -50,10 +50,7 @@ extraxt = Extraxt()
 def main():
     with open("file.pdf", "rb") as buffer:
         stream = buffer.read()
-        output = extraxt.read(
-            stream,
-            fields=FIELDS,
-        )
+        output = extraxt.read(stream, FIELDS)
         print(output)
 
 
