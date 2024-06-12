@@ -17,7 +17,9 @@ import logging
 class Formatter:
     def __init__(self, fields):
         self.fields = fields
-        logging.info(f"Initialized Formatter service with fields {fields.keys()}...")
+        logging.info(
+            f"[ZEPHYR EXTRAXT] Initialized Formatter module with fields {', '.join(fields.keys())}..."
+        )
 
     def format(self, content):
         data = {}
@@ -26,7 +28,7 @@ class Formatter:
         return data
 
     def apply(self, data, output, filter=None):
-        logging.info(f"Applying basic formatting to data...")
+        logging.info(f"[ZEPHYR EXTRAXT] Sanitising data...")
         for category, keys in self.fields.items():
             category_data = data.get(category, {})
             output_category = output.setdefault(category.lower(), {})

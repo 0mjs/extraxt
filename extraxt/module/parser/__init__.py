@@ -22,7 +22,7 @@ class Parser:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.INFO)
-        self.logger.info("Initialised Parser service.")
+        self.logger.info("[ZEPHYR EXTRAXT] Initialised Parser module.")
 
     def read(self, stream):
         """Extract text from a PDF stream and parse it into a DataFrame."""
@@ -37,16 +37,16 @@ class Parser:
         """Open a PDF document from a stream."""
         stream.seek(0)
         content = stream.read()
-        self.logger.info("Opening file...")
+        self.logger.info("[ZEPHYR EXTRAXT] Opening file...")
         try:
             return fitz.open(stream=content, filetype="pdf")
         except Exception as e:
-            self.logger.error(f"Failed to open PDF document: {e}")
+            self.logger.error(f"[ZEPHYR EXTRAXT] Failed to open PDF document: {e}")
             raise
 
     def text(self, doc):
         """Extract text from all pages of a PDF document."""
-        self.logger.info("Reading text content...")
+        self.logger.info("[ZEPHYR EXTRAXT] Reading text content...")
         return [page.get_text("text") for page in doc]
 
     def extract(self, stream):
@@ -57,12 +57,12 @@ class Parser:
             doc.close()
             return text
         except Exception as e:
-            self.logger.error(f"Error extracting text: {e}")
+            self.logger.error(f"[ZEPHYR EXTRAXT] Error extracting text: {e}")
             return []
 
     def parse(self, lines):
         """Parse lines of text to extract key-value pairs."""
-        self.logger.info("Parsing/sanitising text content...")
+        self.logger.info("[ZEPHYR EXTRAXT] Parsing and sanitising text content...")
         data = {}
         key = None
         capture_age = False
@@ -74,7 +74,7 @@ class Parser:
 
             if "date of birth:" in lower_line:
                 self.logger.info(
-                    "Sensitive data found: [Date of birth]. This data will be parsed as [age] as specified in your fields..."
+                    "[ZEPHYR EXTRAXT] !!! Sensitive data found: [Date of birth]. This data will be parsed as [age] as specified in your fields..."
                 )
                 key = "age"
                 data[key] = ""
