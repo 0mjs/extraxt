@@ -42,26 +42,19 @@ Reading from a Buffer stream can be done using `with open` as is standard in Pyt
 ```python
 from extraxt import Extraxt
 
+from .config import FIELDS
+
 extraxt = Extraxt()
 
 
 def main():
     with open("file.pdf", "rb") as buffer:
+        stream = buffer.read()
         output = extraxt.read(
-            stream=buffer.read(),
-            fields={
-                "profile": [
-                    "first_name",
-                    "middle_names",
-                    "last_name",
-                ],
-                "experience": [
-                    "job_title",
-                    "education"
-                ]
-            },
+            stream,
+            fields=FIELDS,
         )
-        print(f"Output: \n\n{output}\n\n")
+        print(output)
 
 
 if __name__ == "__main__":
@@ -81,15 +74,15 @@ import json
 from fastapi import File, HTTPException, JSONResponse
 from extraxt import Extraxt
 
-from app.util import event_loop
-from app.config.fields import FIELDS
+from .util import event_loop
+from .config import FIELDS
 
 extraxt = Extraxt()
 
 
 async def process_file(file: File):
     try:
-        content = await file.read()
+        content = file.read()
         if not content:
             raise HTTPException(500, "Failed to read file.")
         content = await event_loop(extraxt.read, content, FIELDS)
